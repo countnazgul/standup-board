@@ -17,90 +17,51 @@ On hold | Proposal | Discovery | Design | Delivery | QA | Suuport
 <table class="table">
   <thead>
     <tr>
-      <th>Member</th>
-      <th>On hold</th>
-      <th>Proposal</th>
-      <th>Discovery</th>
-      <th>Design</th>
-      <th>Delivery</th>
-      <th>QA</th>
-      <th>Support</th>
+      <th v-for="column in columns" >{{column}}</th>
     </tr>
   </thead>
   <tbody>
-    <tr>
-    <th scope="row">Piers</th>
-    <td class="col-sm-2">
-      <div>
-        <draggable element="span" v-model="list" :options="dragOptions" :move="onMove" class="list-group"> 
-            <transition-group name="no" class="list-group" tag="ul">
-              <li class="list-group-item" v-for="element in list" :key="element.order"> 
-                <i :class="element.fixed? 'fa fa-pencil' : 'fa fa-pencil'" @click="test" aria-hidden="true"></i>
-                {{element.name}}
-              </li> 
-            </transition-group>
-        </draggable>
-      </div>
-    </td>
-    <td class="col-sm-2">
-      <div>
-        <draggable element="span" v-model="list2" :options="dragOptions" :move="onMove" class="list-group"> 
-            <transition-group name="no" class="list-group" tag="ul">
-              <li class="list-group-item" v-for="element in list2" :key="element.order"> 
-                <i :class="element.fixed? 'fa fa-pencil' : 'fa fa-pencil'" @click="test" aria-hidden="true"></i>
-                {{element.name}}
-              </li> 
-            </transition-group>
-        </draggable>
-      </div>
-    </td>    
-    <td class="col-sm-2">
-      <div>
-        <draggable element="span" v-model="list3" :options="dragOptions" :move="onMove" class="list-group"> 
-            <transition-group name="no" class="list-group" tag="ul">
-              <li class="list-group-item" v-for="element in list3" :key="element.order"> 
-                <i :class="element.fixed? 'fa fa-pencil' : 'fa fa-pencil'" @click="test" aria-hidden="true"></i>
-                {{element.name}}
-              </li> 
-            </transition-group>
-        </draggable>
-      </div>
-    </td>
-    <td></td>     
-    <td></td>     
-    <td></td>     
-    <td></td>        
-    </tr>
-    <tr>
-      <th scope="row">Stefan</th>
-      <td></td>     
-      <td></td>     
-      <td></td>     
-      <td></td>     
-      <td></td>     
-      <td></td>       
-      <td></td>             
-    </tr>
-    <tr>
-    <th scope="row">Martin</th>
-    <td class="col-sm-2">
-      <div>
-        <draggable element="span" v-model="list4" :options="dragOptions" :move="onMove" class="list-group"> 
-            <transition-group name="no" class="list-group" tag="ul">
-              <li class="list-group-item" v-for="element in list4" :key="element.order" :class="element.visible? '':''"> 
-                <i :class="element.fixed? 'fa fa-pencil' : 'fa fa-pencil'" @click="test" aria-hidden="true"></i>
-                {{element.name}}
-              </li> 
-            </transition-group>
-        </draggable>
-      </div>
-    </td>
-    <td></td>     
-    <td></td>     
-    <td></td>     
-    <td></td>     
-    <td></td>     
-    <td></td>                 
+    <tr v-for="card in cards">
+      <th scope="row">{{card.name}}</th>
+      <td class="col-sm-2">
+        <div>
+          <draggable element="span" v-model="list" :options="dragOptions" :move="onMove" class="list-group"> 
+              <transition-group name="no" class="list-group" tag="ul">
+                <li class="list-group-item" v-for="element in card.personalCards.onhold" :key="element.order"> 
+                  <i :class="element.fixed? 'fa fa-pencil' : 'fa fa-pencil'" @click="test" aria-hidden="true"></i>
+                  {{element.name}}
+                </li> 
+              </transition-group>
+          </draggable>
+        </div>
+      </td>
+
+      <td class="col-sm-2">
+        <div>
+          <draggable element="span" v-model="list" :options="dragOptions" :move="onMove" class="list-group"> 
+              <transition-group name="no" class="list-group" tag="ul">
+                <li class="list-group-item" v-for="element in card.personalCards.proposal" :key="element.order"> 
+                  <i :class="element.fixed? 'fa fa-pencil' : 'fa fa-pencil'" @click="test" aria-hidden="true"></i>
+                  {{element.name}}
+                </li> 
+              </transition-group>
+          </draggable>
+        </div>
+      </td>
+
+      <td class="col-sm-2">
+        <div>
+          <draggable element="span" v-model="list" :options="dragOptions" :move="onMove" class="list-group"> 
+              <transition-group name="no" class="list-group" tag="ul">
+                <li class="list-group-item" v-for="element in card.personalCards.discovery" :key="element.order"> 
+                  <i :class="element.fixed? 'fa fa-pencil' : 'fa fa-pencil'" @click="test" aria-hidden="true"></i>
+                  {{element.name}}
+                </li> 
+              </transition-group>
+          </draggable>
+        </div>
+      </td>      
+
     </tr>
   </tbody>
 </table>
@@ -109,90 +70,161 @@ On hold | Proposal | Discovery | Design | Delivery | QA | Suuport
 </template>
 
 <script>
-import draggable from 'vuedraggable'
-const message = [ 'draggable', 'component', 'for' ]
-const listPending1 = [ 'draggable1', 'component1', 'for1' ]
+import draggable from "vuedraggable";
+const message = ["draggable", "component", "for"];
+const listPending1 = ["draggable1", "component1", "for1"];
 
 export default {
-  name: 'hello',
+  name: "hello",
   components: {
-    draggable,
+    draggable
   },
-  data () {
+  data() {
     return {
-      list: message.map( (name,index) => {return {name, order: index+1, fixed: false}; }),
-      listPending: listPending1.map( (name,index) => {return {name, order: index+1, fixed: false}; }),
-      list2:[],
-      list3:[],
-      list4:[],
-      list5:[  {
-                "name": "",
-                "order": 1000,
-                "fixed": false,
-                "visible": false
-      }],
-      editable:true,
+      // members: ['Piers', 'Stefan', 'Martin', 'Dean'],
+      columns: [
+        "Member",
+        "On hold",
+        "Proposal",
+        "Discovery",
+        "Design",
+        "Delivery",
+        "QA",
+        "Support"
+      ],
+      cards: [
+        {
+          name: "Piers",
+          personalCards: {
+            onhold: [
+              {
+                name: "Card 1",
+                order: 1,
+                fixed: false
+              },
+              {
+                name: "Card 2",
+                order: 2,
+                fixed: false
+              },
+              {
+                name: "Card 3",
+                order: 3,
+                fixed: false
+              }
+            ],
+            proposal: [],
+            discovery: [
+              {
+                name: "Card 4",
+                order: 1,
+                fixed: false
+              },
+              {
+                name: "Card 5",
+                order: 2,
+                fixed: false
+              },
+              {
+                name: "Card 6",
+                order: 3,
+                fixed: false
+              }
+            ]
+          }
+        },
+        {
+          name: "Stefan",
+          personalCards: []
+        },
+        {
+          name: "Dean",
+          personalCards: []
+        }
+      ],
+      list: message.map((name, index) => {
+        return { name, order: index + 1, fixed: false };
+      }),
+      listPending: listPending1.map((name, index) => {
+        return { name, order: index + 1, fixed: false };
+      }),
+      list2: [],
+      list3: [],
+      list4: [],
+      list5: [
+        {
+          name: "",
+          order: 1000,
+          fixed: false,
+          visible: false
+        }
+      ],
+      editable: true,
       isDragging: true,
-      delayedDragging:true
-    }
+      delayedDragging: true
+    };
   },
-  methods:{
-    orderList () {
-      this.list = this.list.sort((one,two) =>{return one.order-two.order; })
+  methods: {
+    orderList() {
+      this.list = this.list.sort((one, two) => {
+        return one.order - two.order;
+      });
     },
-    onMove ({relatedContext, draggedContext}) { 
+    onMove({ relatedContext, draggedContext }) {
       const relatedElement = relatedContext.element;
       const draggedElement = draggedContext.element;
       // console.log(relatedElement)
-      return (!relatedElement || !relatedElement.fixed) && !draggedElement.fixed
+      return (
+        (!relatedElement || !relatedElement.fixed) && !draggedElement.fixed
+      );
     },
-    onEnd(evt, originalEvent){
-      console.log(evt, originalEvent)
-    },    
+    onEnd(evt, originalEvent) {
+      console.log(evt, originalEvent);
+    },
     test() {
-      console.log('test')
+      console.log("test");
     }
   },
   computed: {
-    dragOptions () {
-      return  {
+    dragOptions() {
+      return {
         animation: 0,
-        group: 'description',
+        group: "description",
         disabled: !this.editable,
-        ghostClass: 'ghost'
+        ghostClass: "ghost"
       };
     },
-    listString(){
-      console.log(JSON.stringify(this.list, null, 2))
-      return JSON.stringify(this.list, null, 2);  
+    listString() {
+      console.log(JSON.stringify(this.list, null, 2));
+      return JSON.stringify(this.list, null, 2);
     },
-    list2String(){
-      return JSON.stringify(this.list2, null, 2);  
+    list2String() {
+      return JSON.stringify(this.list2, null, 2);
     },
-    list3String(){
-      return JSON.stringify(this.list3, null, 2);  
+    list3String() {
+      return JSON.stringify(this.list3, null, 2);
     },
-    list4String(){
-      return JSON.stringify(this.list4, null, 2);  
-    }        
+    list4String() {
+      return JSON.stringify(this.list4, null, 2);
+    }
   },
   watch: {
-    isDragging (newValue) {
-      if (newValue){
-        this.delayedDragging= true        
-        return
+    isDragging(newValue) {
+      if (newValue) {
+        this.delayedDragging = true;
+        return;
       }
-      this.$nextTick( () =>{
-           this.delayedDragging =false
-      })
+      this.$nextTick(() => {
+        this.delayedDragging = false;
+      });
     }
   }
-}
+};
 </script>
 
 <style>
 .table > tr > td {
-     vertical-align: top !important;
+  vertical-align: top !important;
 }
 .flip-list-move {
   transition: transform 0.5s;
@@ -203,8 +235,8 @@ export default {
 }
 
 .ghost {
-  opacity: .5;
-  background: #C8EBFB;
+  opacity: 0.5;
+  background: #c8ebfb;
 }
 
 .hidden {
@@ -212,14 +244,15 @@ export default {
 }
 
 .list-group {
-  min-height: 20px;
+  min-height: 42px;
+  background-color: lightgray;
 }
 
 .list-group-item {
   cursor: move;
 }
 
-.list-group-item i{
+.list-group-item i {
   cursor: pointer;
 }
 </style>
